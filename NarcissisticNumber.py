@@ -11,4 +11,4 @@ def narcissistic(value):
         return False
 
 
-print(narcissistic(4887))
+print(narcissistic(4884))
