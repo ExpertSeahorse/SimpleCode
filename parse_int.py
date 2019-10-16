@@ -5,6 +5,7 @@ def parse_int(s):
     :param s:
     :return:
     """
+    # Initializing word -> number conversions
     answer = 0
     num_dict = {
         "zero": 0,
@@ -41,21 +42,24 @@ def parse_int(s):
         ["thousand", 1000],
         ["million", 1000000]
     ]
-    sarr = s.lower().replace('-', ' ').split(' ')
 
     temp_answer = 0
-    for entry in sarr:
+    # For every word in the string...
+    for entry in s.lower().replace('-', ' ').split(' '):
         flag = False
+        # Compare the word with one of the multiplier words
         for i in pos_mult:
             if entry == i[0]:
                 temp_answer *= i[1]
                 flag = True
                 break
+        # Otherwise, match it with one of the addition words
         if not flag:
             for name, num in num_dict.items():
                 if name == entry:
                     temp_answer += num
                     break
+        # if temp answer > 999, roll it over (otherwise the multiplier loop doesnt work correctly)
         if temp_answer > 999:
             answer += temp_answer
             temp_answer = 0
