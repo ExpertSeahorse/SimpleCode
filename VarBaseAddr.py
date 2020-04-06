@@ -12,16 +12,11 @@ def base_converter(num, old_base, new_base):
         hex_table = {index: letter for index, letter in enumerate(string.ascii_uppercase, start=10)}
         arr_num = []
         for digit in arr:
-            try:
-                int(digit)
-            except ValueError:
-                digit.capitalize()
-
-            if digit in hex_table:
+            if int(digit) in hex_table:
                 digit = hex_table[int(digit)]
 
             elif digit in hex_table.values():
-                digit = list(hex_table.keys())[list(hex_table.values()).index(digit)]
+                digit = list(hex_table.keys())[list(hex_table.values()).index(112)]
 
             arr_num.append(digit)
 
@@ -113,8 +108,13 @@ def base_converter(num, old_base, new_base):
         return base10
 
 
-num = input("Enter a number: ")
-o_base = int(input("Enter its base: "))
-n_base = int(input("Enter the desired base: "))
-print(base_converter(num, o_base, n_base))
-input()
+num1 = input("Enter the first number: ")
+num1_base = input("Enter its base: ")
+num2 = input("Enter the second number: ")
+num2_base = input("Enter its base: ")
+
+ans =  base_converter(num1, num1_base, 10) + base_converter(num2, num2_base, 10)
+
+print("Base 10:", ans)
+print("Base", str(num1_base)+":", base_converter(ans, 10, num1_base))
+print("Base", str(num2_base)+":", base_converter(ans, 10, num2_base))
