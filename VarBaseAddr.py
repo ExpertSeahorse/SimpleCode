@@ -12,16 +12,21 @@ def base_converter(num, old_base, new_base):
         hex_table = {index: letter for index, letter in enumerate(string.ascii_uppercase, start=10)}
         arr_num = []
         for digit in arr:
-            if int(digit) in hex_table:
+            try:
+                int(digit)
+            except ValueError:
+                digit.capitalize()
+
+            if digit in hex_table:
                 digit = hex_table[int(digit)]
 
             elif digit in hex_table.values():
-                digit = list(hex_table.keys())[list(hex_table.values()).index(112)]
+                digit = list(hex_table.keys())[list(hex_table.values()).index(digit)]
 
             arr_num.append(digit)
 
         return arr_num
-
+    num = str(num)
     # Converts the number into base 10 if not already
     if old_base != 10:
         # Generates a list of digits for the number
@@ -109,12 +114,25 @@ def base_converter(num, old_base, new_base):
 
 
 num1 = input("Enter the first number: ")
-num1_base = input("Enter its base: ")
+base1 = int(input("Enter its base: "))
 num2 = input("Enter the second number: ")
-num2_base = input("Enter its base: ")
+base2 = int(input("Enter its base: "))
+sign = input("Enter the sign of the operation you want to do (+,-,*,/): ")
 
-ans =  base_converter(num1, num1_base, 10) + base_converter(num2, num2_base, 10)
+num1_10 = int(base_converter(num1, base1, 10))
+num2_10 = int(base_converter(num2, base2, 10))
+if sign == '+':
+    ans = num1_10 + num2_10
+elif sign == '-':
+    ans = num1_10 - num2_10
+elif sign == '*':
+    ans = num1_10 * num2_10
+elif sign == '/':
+    ans = num1_10 / num2_10
+
 
 print("Base 10:", ans)
-print("Base", str(num1_base)+":", base_converter(ans, 10, num1_base))
-print("Base", str(num2_base)+":", base_converter(ans, 10, num2_base))
+print("Base", str(base1) + ":", base_converter(ans, 10, base1))
+if base1 != base2:
+    print("Base", str(base2) + ":", base_converter(ans, 10, base2))
+input()
